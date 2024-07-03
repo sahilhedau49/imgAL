@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/auth";
 import MyRooms from "./MyRooms";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const Rooms = () => {
   const navigate = useNavigate();
@@ -23,13 +24,16 @@ const Rooms = () => {
           room_id: roomcode,
         }
       );
-      console.log(res);
-      // toast on res.data.message
-      window.location.reload();
+      // console.log(res);
+      toast.success(res.data.message);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     } catch (error) {
-      console.log(error);
+      toast.error(error.response.data.message);
+      // console.log(error);
     }
-    console.log("Finding room with code: ", roomcode);
+    // console.log("Finding room with code: ", roomcode);
   };
 
   const handleCreateRoom = () => {

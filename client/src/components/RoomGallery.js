@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import UploadForm from "./UploadForm";
 import { FaPlus, FaTimes } from "react-icons/fa";
 import DocCard from "./DocCard";
+import errorImg from "../images/error.svg";
 
 const RoomGallery = () => {
   const [documents, setDocuments] = useState([]);
@@ -65,7 +66,8 @@ const RoomGallery = () => {
     fetchRoomDetails();
   }, [user]);
 
-  const handleAddNewAdmin = async () => {
+  const handleAddNewAdmin = async (e) => {
+    e.preventDefault();
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/addNewAuthor`,
@@ -75,8 +77,11 @@ const RoomGallery = () => {
           room_id: room_id,
         }
       );
-      console.log(res);
+      // console.log(res);
       setAddNewAdminRes(res.data.message);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     } catch (error) {
       console.log(error);
     }
@@ -112,7 +117,7 @@ const RoomGallery = () => {
               )}
             </div>
           </div>
-          {isFormOpen && (
+          {isFormOpen && isAdmin && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
               <div ref={modalRef}>
                 <UploadForm
@@ -151,12 +156,19 @@ const RoomGallery = () => {
           )}
         </div>
       ) : (
-        <div>not found</div>
+        <div className="min-h-[90vh] flex place-content-center place-items-center">
+          <div className="w-fit h-fit">
+            <p className="text-3xl font-semibold text-center text-zinc-700 mb-4">
+              Room Not Found !!!
+            </p>
+            <img src={errorImg} className="w-[24rem]" />
+          </div>
+        </div>
       )}
       {addAdminModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
           <div ref={modalRef} className="bg-slate-200 p-8 rounded-md">
-            <div className="flex flex-col">
+            <form onSubmit={handleAddNewAdmin} className="flex flex-col">
               <div>
                 <h1 className="text-2xl font-medium text-zinc-800">
                   Enter editor email
@@ -171,7 +183,7 @@ const RoomGallery = () => {
                 />
               </div>
               <button
-                onClick={handleAddNewAdmin}
+                type="submit"
                 className="mt-6 mx-auto w-fit bg-zinc-800 text-zinc-100 px-10 py-2 texxl font-medium rounded-md"
               >
                 Add
@@ -181,7 +193,7 @@ const RoomGallery = () => {
                   ✅ {addNewAdminRes}
                 </h1>
               )}
-            </div>
+            </form>
           </div>
         </div>
       )}

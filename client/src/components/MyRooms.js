@@ -3,6 +3,7 @@ import axios from "axios";
 import { UserAuth } from "../context/auth";
 import { Link } from "react-router-dom";
 import { HiOutlineDotsVertical } from "react-icons/hi";
+import toast from "react-hot-toast";
 
 const MyRooms = () => {
   const [myRooms, setMyRooms] = useState([]);
@@ -17,7 +18,7 @@ const MyRooms = () => {
           const res = await axios.get(
             `${process.env.REACT_APP_BACKEND_URL}/api/getRoomsForMember/${username}`
           );
-          console.log(res);
+          // console.log(res);
           setMyRooms(res.data.rooms);
         } catch (error) {
           console.log(error);
@@ -30,26 +31,29 @@ const MyRooms = () => {
 
   const handleLeaveRoom = async (room_id) => {
     try {
-      await axios.delete(
+      const res = await axios.delete(
         `${process.env.REACT_APP_BACKEND_URL}/api/leaveRoom/${room_id}/${
           user.email.split("@")[0]
         }`
       );
-      window.location.reload();
+      toast.success(res.data.message);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <div className="w-[80%] mx-auto mt-20">
+    <div className="w-[80%] mx-auto my-20">
       <div className="text-4xl font-medium text-center mb-10">My Rooms</div>
 
       {myRooms?.length > 0 ? (
         <div className="grid grid-cols-3 gap-6">
           {myRooms.map((room) => (
             <div key={room.room_id} className="card bg-zinc-100 shadow-xl">
-              <div className="card-body justify-between">
+              <div className="card-body pb-4 pt-6 justify-between">
                 <div className="flex relative justify-between">
                   <div className="w-[90%]">
                     <h2 className="card-title mb-2">{room.room_name}</h2>

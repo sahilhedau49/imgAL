@@ -10,11 +10,13 @@ import PasswordReset from "./components/PasswordReset";
 import CreateRoom from "./components/CreateRoom";
 import Navbar from "./components/Navbar";
 import RoomGallery from "./components/RoomGallery";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
     <div className="bg-zinc-200">
       <AuthContextProvider>
+        <Toaster position="top-center" reverseOrder={false} />
         <Navbar />
         <Routes>
           <Route

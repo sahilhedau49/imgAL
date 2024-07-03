@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import useStorage from "../Hooks/useStorage";
 import Zoom from "react-reveal/Zoom";
 import { FiAlertCircle } from "react-icons/fi";
+import toast from "react-hot-toast";
 
 const UploadForm = ({ room_id, uploaded_by }) => {
   const [selectedFile, setSelectedFile] = useState();
@@ -81,14 +82,14 @@ const UploadForm = ({ room_id, uploaded_by }) => {
         </div>
         <div className="mt-4">
           <label className="text-lg font-medium">Description</label>
-          <input
-            type="text"
+          <textarea
             required
+            rows={8}
             onChange={(e) => {
               setDescription(e.target.value);
             }}
             placeholder="Describe about document content/purpose"
-            className="input input-bordered w-full max-w-lg"
+            className="input input-bordered h-auto w-full max-w-lg py-2"
           />
         </div>
         <div className="text-center mt-6">
@@ -99,35 +100,14 @@ const UploadForm = ({ room_id, uploaded_by }) => {
             Add
           </button>
         </div>
-        {/* <div className="flex gap-3 justify-center">
-          <button
-            type="submit"
-            onClick={handleSubmit}
-            name="public"
-            className={`btn w-fit mt-3`}
-            disabled={!selectedFile}
-          >
-            Upload Public
-          </button>
-          <span className={`mt-3 ${Boolean(progress) && "loading"}`}></span>
-          <button
-            type="submit"
-            onClick={handleSubmit}
-            name="private"
-            className={`btn w-fit mt-3`}
-            disabled={!selectedFile}
-          >
-            Upload Private
-          </button>
-        </div> */}
         <span
           className={`mx-auto ${Boolean(progress) && " mt-6 loading"}`}
         ></span>
         {added && (
           <Zoom left>
             <div>
-              <div className="w-fit text-lg mt-6 mx-auto px-3 bg-green-500 rounded-full text-center text-slate-200 ">
-                Success ✅
+              <div className="w-fit text-lg mt-6 mx-auto px-4 py-1 bg-green-500 rounded-full text-center text-slate-200 ">
+                ✅ Document uploaded successfully
               </div>
             </div>
           </Zoom>

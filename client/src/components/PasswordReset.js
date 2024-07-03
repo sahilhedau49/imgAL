@@ -27,7 +27,7 @@ const PasswordReset = () => {
 
   return (
     <div className="overflow-y-hidden">
-      <div className="hero min-h-screen bg-base-200">
+      <div className="hero min-h-[90vh]">
         <div className="hero-content flex-col w-[80%]">
           <div className="text-center">
             <h1 className="text-5xl font-bold mb-4">Password Reset</h1>

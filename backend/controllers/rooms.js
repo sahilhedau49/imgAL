@@ -77,18 +77,38 @@ const addNewAdminToRoom = (req, res) => {
 const addNewMemberToRoom = (req, res) => {
   const { member_name, room_id } = req.body;
 
-  const q = "INSERT INTO roommembers (`member_name`, `room_id`) VALUES (?, ?)";
-  const values = [member_name, room_id];
+  const query = `
+      SELECT *
+      FROM roommembers
+      WHERE member_name = ? and room_id = ?`;
 
-  db.query(q, values, (err, result) => {
+  db.query(query, [member_name, room_id], (err, results) => {
     if (err) {
-      return res.json({ message: `Room not found with ID ${room_id} !!!` });
+      res.json(err);
+      return;
     }
 
-    console.log(`Joined room with room id ${room_id} successfully.`);
-    res.json({
-      message: `Joined room with room id ${room_id} successfully.`,
-      result: result,
+    if (results.length !== 0) {
+      res.json({ message: `You have already joined room with id ${room_id}` });
+      return;
+    }
+
+    const q =
+      "INSERT INTO roommembers (`member_name`, `room_id`) VALUES (?, ?)";
+    const values = [member_name, room_id];
+
+    db.query(q, values, (err, result) => {
+      if (err) {
+        return res
+          .status(404)
+          .json({ message: `Room not found with ID ${room_id} !!!` });
+      }
+
+      console.log(`Joined room with room id ${room_id} successfully.`);
+      res.json({
+        message: `Joined room with room id ${room_id} successfully.`,
+        result: result,
+      });
     });
   });
 };

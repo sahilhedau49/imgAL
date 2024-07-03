@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { MdDelete } from "react-icons/md";
+import toast from "react-hot-toast";
 
 const DocCard = ({ data, isAdmin }) => {
   const modalRef = useRef(null);
@@ -24,8 +25,11 @@ const DocCard = ({ data, isAdmin }) => {
       const res = await axios.delete(
         `${process.env.REACT_APP_BACKEND_URL}/api/deleteDocByID/${data.doc_id}`
       );
-      console.log(res);
-      window.location.reload();
+      // console.log(res);
+      toast.success(res.data.message);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     } catch (error) {
       console.log(error);
     }
