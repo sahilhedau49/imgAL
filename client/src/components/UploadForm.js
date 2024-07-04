@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useStorage from "../Hooks/useStorage";
 import Zoom from "react-reveal/Zoom";
 import { FiAlertCircle } from "react-icons/fi";
@@ -41,14 +41,23 @@ const UploadForm = ({ room_id, uploaded_by }) => {
         room_id: room_id,
         uploaded_by: uploaded_by,
       });
-      setTimeout(() => {
-        setAdded(false);
-        window.location.reload();
-      }, 5000);
+      // setTimeout(() => {
+      //   setAdded(false);
+      //   window.location.reload();
+      // }, 5000);
     } else {
       setError("Supported file types are pdf, png, docx, doc, pptx and ppt.");
     }
   };
+
+  useEffect(() => {
+    if (added) {
+      setTimeout(() => {
+        setAdded(false);
+        window.location.reload();
+      }, 3000);
+    }
+  }, [added]);
 
   return (
     <div className="bg-slate-200 p-10 md:p-6 rounded-md">
