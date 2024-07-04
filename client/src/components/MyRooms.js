@@ -96,7 +96,7 @@ const MyRooms = () => {
           ))}
         </div>
       ) : (
-        <h2 className="w-full text-4xl text-center font-semibold text-zinc-400">
+        <h2 className="w-full md:w-[80%] md:mx-auto text-4xl md:text-2xl text-center font-semibold text-zinc-400">
           You have not joined any room yet...
         </h2>
       )}

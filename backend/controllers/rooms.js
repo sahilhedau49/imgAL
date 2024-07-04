@@ -1,6 +1,6 @@
 const db = require("../db");
 
-const createRoom = async (req, res) => {
+const createRoom = (req, res) => {
   const { room_name, room_description, room_id, admin_email } = req.body;
 
   const roomQuery =
