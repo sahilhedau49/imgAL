@@ -90,27 +90,27 @@ const RoomGallery = () => {
   return (
     <>
       {roomDetails ? (
-        <div className="w-[80%] mx-auto min-h-[90vh]">
-          <div className="mt-10">
-            <div className="flex justify-between">
-              <h1 className="text-4xl mb-3 font-semibold">
+        <div className="w-[80%] md:w-[90%] mx-auto min-h-[90vh] py-10">
+          <div className="flex justify-between md:flex-col md:px-4 md:gap-4">
+            <div className="w-[75%] md:w-full">
+              <h1 className="text-4xl mb-4 font-semibold md:text-2xl md:mb-2">
                 {roomDetails.room_name}
               </h1>
+              <h2 className="text-2xl font-medium text-zinc-500 md:text-base md:font-normal">
+                {roomDetails.room_description}
+              </h2>
+            </div>
+            <div className="w-[20%] md:w-full">
               {isAdmin && (
-                <h1 className="place-content-center text-xl">
+                <h1 className="place-content-center text-xl mb-4 md:text-lg md:mb-2">
                   <span className="font-medium text-zinc-600">Room code: </span>
                   {room_id}
                 </h1>
               )}
-            </div>
-            <div className="flex justify-between">
-              <h2 className="text-2xl font-medium text-zinc-500">
-                {roomDetails.room_description}
-              </h2>
               {isAdmin && (
                 <button
                   onClick={() => setAddAdminModal(true)}
-                  className="px-6 py-2 text-lg font-medium border-2 border-zinc-700 bg-zinc-300 rounded-lg"
+                  className="px-6 py-2 text-lg font-medium md:px-4 md:py-1 md:text-base border-2 border-zinc-700 bg-zinc-300 rounded-lg"
                 >
                   Add new editor
                 </button>
@@ -119,7 +119,7 @@ const RoomGallery = () => {
           </div>
           {isFormOpen && isAdmin && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-              <div ref={modalRef}>
+              <div className="w-[35%] md:w-[90%]" ref={modalRef}>
                 <UploadForm
                   room_id={room_id}
                   uploaded_by={user?.email?.split("@")[0]}
@@ -128,7 +128,7 @@ const RoomGallery = () => {
             </div>
           )}
           <div className="mt-10">
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-4 md:grid-cols-1">
               {documents.length !== 0 &&
                 documents.map((doc) => (
                   <DocCard key={doc.doc_id} data={doc} isAdmin={isAdmin} />
@@ -136,7 +136,7 @@ const RoomGallery = () => {
             </div>
           </div>
           {isAdmin && (
-            <div className="fixed bottom-8 right-8">
+            <div className="fixed bottom-8 right-8 md:bottom-6">
               {isFormOpen ? (
                 <button
                   onClick={() => setIsFormOpen(false)}
@@ -167,24 +167,27 @@ const RoomGallery = () => {
       )}
       {addAdminModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div ref={modalRef} className="bg-slate-200 p-8 rounded-md">
+          <div
+            ref={modalRef}
+            className="bg-slate-200 md:w-[90%] p-8 md:p-4 rounded-md"
+          >
             <form onSubmit={handleAddNewAdmin} className="flex flex-col">
               <div>
-                <h1 className="text-2xl font-medium text-zinc-800">
+                <h1 className="text-2xl font-medium text-zinc-800 md:text-xl">
                   Enter editor email
                 </h1>
                 <input
                   onChange={(e) => {
                     setNewAdminEmail(e.target.value);
                   }}
-                  className="w-80 mt-2 rounded-md outline-none px-4 py-2 border-2 border-zinc-400 focus:border-zinc-700"
+                  className="w-80 md:w-full mt-2 rounded-md outline-none px-4 py-2 border-2 border-zinc-400 focus:border-zinc-700"
                   type="email"
                   required
                 />
               </div>
               <button
                 type="submit"
-                className="mt-6 mx-auto w-fit bg-zinc-800 text-zinc-100 px-10 py-2 texxl font-medium rounded-md"
+                className="mt-6 mx-auto w-fit bg-zinc-800 text-zinc-100 px-10 py-2 font-medium rounded-md"
               >
                 Add
               </button>

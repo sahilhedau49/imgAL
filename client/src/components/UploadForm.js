@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import useStorage from "../Hooks/useStorage";
 import Zoom from "react-reveal/Zoom";
 import { FiAlertCircle } from "react-icons/fi";
-import toast from "react-hot-toast";
 
 const UploadForm = ({ room_id, uploaded_by }) => {
   const [selectedFile, setSelectedFile] = useState();
@@ -52,20 +51,17 @@ const UploadForm = ({ room_id, uploaded_by }) => {
   };
 
   return (
-    <div className="bg-slate-200 p-10 rounded-md">
-      <form
-        onSubmit={handleSubmit}
-        className="form-control w-full max-w-md mx-auto"
-      >
+    <div className="bg-slate-200 p-10 md:p-6 rounded-md">
+      <form onSubmit={handleSubmit} className="form-control mx-auto">
         <div>
-          <h1 className="text-3xl font-semibold mb-10 text-center">
+          <h1 className="text-3xl font-semibold mb-10 md:text-2xl md:mb-6 text-center">
             Upload Document
           </h1>
           <input
             onChange={handleFileChange}
             type="file"
             required
-            className="file-input block mx-auto file-input-bordered w-full max-w-xs"
+            className="file-input block mx-auto file-input-bordered w-[75%]"
           />
         </div>
         <div className="mt-4">
@@ -77,7 +73,7 @@ const UploadForm = ({ room_id, uploaded_by }) => {
               setDoc_name(e.target.value);
             }}
             placeholder="Document Name"
-            className="input input-bordered w-full max-w-lg"
+            className="input input-bordered w-full"
           />
         </div>
         <div className="mt-4">
@@ -89,12 +85,12 @@ const UploadForm = ({ room_id, uploaded_by }) => {
               setDescription(e.target.value);
             }}
             placeholder="Describe about document content/purpose"
-            className="input input-bordered h-auto w-full max-w-lg py-2"
+            className="input input-bordered h-auto w-full py-2"
           />
         </div>
         <div className="text-center mt-6">
           <button
-            className="px-12 py-2 bg-base-100 rounded-md text-xl font-medium"
+            className="px-12 py-2 md:px-8 rounded-md text-xl md:text-lg font-medium border-2 duration-200 text-zinc-100 border-zinc-800 bg-zinc-800 hover:text-zinc-800 hover:bg-base-200"
             type="submit"
           >
             Add
@@ -106,16 +102,16 @@ const UploadForm = ({ room_id, uploaded_by }) => {
         {added && (
           <Zoom left>
             <div>
-              <div className="w-fit text-lg mt-6 mx-auto px-4 py-1 bg-green-500 rounded-full text-center text-slate-200 ">
+              <div className="w-fit text-lg mt-6 mx-auto px-4 py-1 bg-green-500 rounded-xl text-center text-slate-200 ">
                 ✅ Document uploaded successfully
               </div>
             </div>
           </Zoom>
         )}
         {error && (
-          <div className="alert alert-error mt-6 max-w-fit px-4 mx-auto py-2">
-            <FiAlertCircle />
-            <span>{error}</span>
+          <div className="alert alert-error flex mt-6 max-w-fit px-4 mx-auto py-2">
+            <FiAlertCircle className="md:text-3xl" />
+            <span className="md:text-xs">{error}</span>
           </div>
         )}
       </form>

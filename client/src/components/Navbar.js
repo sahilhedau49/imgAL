@@ -16,16 +16,19 @@ const Navbar = () => {
   return (
     <div>
       <div className="border-b-2 border-black px-40 py-4 justify-between navbar sm:px-4">
-        <Link to={"/"} className="font-bold normal-case text-xl">
+        <Link to={"/"} className="font-bold normal-case text-2xl md:text-xl">
           NoteHub
         </Link>
         <div className="flex gap-6">
           {user && user.email && (
-            <p className="font-semibold text-lg">{user.email.split("@")[0]}</p>
+            <p className="font-semibold text-lg md:hidden">
+              {user.email.split("@")[0]}
+            </p>
           )}
           <button
             onClick={handleSignOut}
-            className="py-3 px-4 bg-zinc-100 rounded-xl hover:bg-zinc-800 duration-200 hover:text-zinc-200"
+            disabled={!user || !user?.emailVerified}
+            className="py-3 border-2 border-zinc-500 text-zinc-100 disabled:invisible px-4 bg-zinc-700 rounded-xl md:rounded-md hover:bg-zinc-300 duration-200 hover:text-zinc-800 md:py-2"
           >
             Sign Out
           </button>

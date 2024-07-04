@@ -35,24 +35,14 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const emailLogIn = (email, password) => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then(
-        setTimeout(
-          () =>
-            setErrWhileLog({
-              message:
-                "You have not verified your email. Please check mail in your inbox to verify your account.",
-            }),
-          3000
-        )
-      )
-      .catch((error) => {
-        console.log(error);
-        setErrWhileLog(error);
-      });
+    signInWithEmailAndPassword(auth, email, password).catch((error) => {
+      console.log(error);
+      setErrWhileLog(error);
+    });
   };
 
   const SignOut = () => {
+    setErrWhileLog("");
     signOut(auth);
   };
 

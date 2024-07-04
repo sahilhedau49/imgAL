@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { UserAuth } from "../context/auth";
 import { Link } from "react-router-dom";
 import ErrorLog from "./ErrorLog";
+import { FaInfoCircle } from "react-icons/fa";
 
 const Login = () => {
   const [data, setData] = useState({ email: "", password: "" });
   const { emailLogIn, errWhileLog } = UserAuth();
+  const [verificationWarning, setVerificationWarning] = useState(false);
+  const modalRef = useRef(null);
 
   const getData = (e) => {
     const { name, value } = e.target;
@@ -24,17 +27,33 @@ const Login = () => {
     }
   };
 
+  const handleOutsideClick = (e) => {
+    if (modalRef.current && !modalRef.current.contains(e.target)) {
+      setVerificationWarning(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+
   return (
-    <div className="overflow-y-hidden min-h-[90vh] flex mt-10 place-content-center">
+    <div className="relative overflow-y-hidden min-h-[90vh] flex mt-6 place-content-center">
       <form>
         <div className="hero">
-          <div className="hero-content flex-col sm:w-screen sm:px-4">
-            <div className="text-center">
-              <h1 className="text-5xl font-bold">Log In</h1>
-              <p className="py-6">Share your notes with the world 📖💫</p>
+          <div className="hero-content flex-col md:w-screen md:px-4">
+            <div className="w-[50%] md:w-[90%] text-center">
+              <h1 className="text-5xl font-bold md:text-3xl">Log In</h1>
+              <p className="py-6 md:text-sm">
+                Collaborative platform to store, manage, and share documents
+                with friends in dedicated rooms. 📖💫
+              </p>
             </div>
-            <div className="card w-[30rem] shadow-2xl bg-base-100 sm:w-[90%]">
-              <div className="card-body">
+            <div className="card w-[30rem] shadow-2xl bg-base-100 md:w-[95%]">
+              <div className="card-body md:py-4">
                 <div className="form-control">
                   <label className="label">
                     <span className="label-text">Email</span>
@@ -85,6 +104,27 @@ const Login = () => {
         </div>
       </form>
       {errWhileLog && <ErrorLog />}
+      {!verificationWarning && (
+        <button
+          onClick={() => setVerificationWarning(true)}
+          className="absolute w-fit rounded-md right-10"
+        >
+          <FaInfoCircle className="text-2xl" />
+        </button>
+      )}
+      {verificationWarning && (
+        <div
+          ref={modalRef}
+          onClick={() => setVerificationWarning(false)}
+          className="absolute bg-[#ffcc00a5] p-6 rounded-lg right-10 w-[20%] md:bg-[#ffda45] md:w-[70%]"
+        >
+          <div className="text-justify">
+            <strong>Note:</strong> If your are unable to login, make sure you
+            have verified your account. Verification link was sent to your email
+            when you created an account.
+          </div>
+        </div>
+      )}
     </div>
   );
 };

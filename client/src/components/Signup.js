@@ -25,16 +25,19 @@ const Signup = () => {
   };
 
   return (
-    <div className="overflow-y-hidden min-h-[90vh] mt-10 flex place-content-center">
+    <div className="overflow-y-hidden min-h-[90vh] mt-6 flex place-content-center">
       <form>
         <div className="hero">
-          <div className="hero-content flex-col sm:w-screen sm:px-4">
-            <div className="text-center">
-              <h1 className="text-5xl font-bold">Sign Up</h1>
-              <p className="py-6">Share your notes with the world 📖💫</p>
+          <div className="hero-content flex-col md:w-screen md:px-4">
+            <div className="w-[50%] md:w-[90%] text-center">
+              <h1 className="text-5xl font-bold md:text-3xl">Sign Up</h1>
+              <p className="py-6 md:text-sm">
+                Collaborative platform to store, manage, and share documents
+                with friends in dedicated rooms. 📖💫
+              </p>
             </div>
-            <div className="card w-[30rem] shadow-2xl bg-base-100 sm:w-[90%]">
-              <div className="card-body">
+            <div className="card w-[30rem] shadow-2xl bg-base-100 md:w-[95%]">
+              <div className="card-body md:py-4">
                 <div className="form-control">
                   <label className="label">
                     <span className="label-text">Email</span>

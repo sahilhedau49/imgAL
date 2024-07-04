@@ -37,10 +37,10 @@ const CreateRoom = () => {
   };
 
   return (
-    <div className="min-h-[90vh] flex place-items-center">
+    <div className="min-h-[90vh] flex pb-10 place-items-center">
       <form
         onSubmit={handleCreateRoom}
-        className="w-[36%] mx-auto p-10 bg-zinc-700 text-gray-100 rounded-md"
+        className="w-[36%] md:w-[95%] mx-auto p-10 md:p-6 bg-gray-300 border-2 border-zinc-800 text-zinc-800 rounded-md"
       >
         <h2 className="text-3xl font-semibold mb-5 text-center">Create Room</h2>
         <div>
@@ -51,21 +51,21 @@ const CreateRoom = () => {
               value={roomName}
               onChange={(e) => setRoomName(e.target.value)}
               required
-              className="text-gray-900 bg-zinc-200 px-3 py-1 text-lg rounded-md outline-none"
+              className="text-gray-900 border-2 border-zinc-400 focus:border-zinc-600 bg-zinc-200 px-3 py-1 text-lg rounded-md outline-none"
             />
           </div>
           <div className="mb-4 flex flex-col gap-1">
-            <label className="">Description:</label>
+            <label className="text-xl">Description:</label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
-              className="text-gray-900 bg-zinc-200 px-3 py-1 text-lg rounded-md outline-none"
+              className="text-gray-900 border-2 bg-zinc-200 border-zinc-400 focus:border-zinc-600 px-3 py-1 text-lg rounded-md outline-none"
             ></textarea>
           </div>
           <button
             type="submit"
-            className="block mx-auto mt-10 px-8 py-2 rounded-md bg-zinc-900"
+            className="block mx-auto mt-10 px-8 py-2 duration-200 border-2 border-zinc-400 text-zinc-200 bg-zinc-800 rounded-md hover:text-zinc-700 hover:bg-zinc-100"
           >
             Create
           </button>

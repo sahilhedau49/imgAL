@@ -46,11 +46,13 @@ const MyRooms = () => {
   };
 
   return (
-    <div className="w-[80%] mx-auto my-20">
-      <div className="text-4xl font-medium text-center mb-10">My Rooms</div>
+    <div className="w-[80%] md:w-[90%] mx-auto my-20 md:my-10">
+      <div className="text-4xl font-medium text-center mb-10 md:mb-6 md:text-2xl">
+        My Rooms
+      </div>
 
       {myRooms?.length > 0 ? (
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-3 gap-6 md:grid-cols-1">
           {myRooms.map((room) => (
             <div key={room.room_id} className="card bg-zinc-100 shadow-xl">
               <div className="card-body pb-4 pt-6 justify-between">
@@ -84,7 +86,7 @@ const MyRooms = () => {
                 <div className="card-actions justify-end">
                   <Link
                     to={`/room/${room.room_id}`}
-                    className="px-4 py-2 bg-zinc-600 text-zinc-100 rounded-md"
+                    className="px-4 py-2 bg-zinc-700 text-zinc-100 rounded-md"
                   >
                     Enter
                   </Link>
