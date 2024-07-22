@@ -6,6 +6,7 @@ import UploadForm from "./UploadForm";
 import { FaPlus, FaTimes } from "react-icons/fa";
 import DocCard from "./DocCard";
 import errorImg from "../images/error.svg";
+import { FaUsers } from "react-icons/fa";
 
 const RoomGallery = () => {
   const [documents, setDocuments] = useState([]);
@@ -18,6 +19,9 @@ const RoomGallery = () => {
   const [addAdminModal, setAddAdminModal] = useState(false);
   const [newAdminEmail, setNewAdminEmail] = useState("");
   const [addNewAdminRes, setAddNewAdminRes] = useState("");
+  const [admins, setAdmins] = useState();
+  const [roommembers, setRoommembers] = useState();
+  const [showUsers, setShowUsers] = useState(false);
 
   const handleOutsideClick = (e) => {
     if (modalRef.current && !modalRef.current.contains(e.target)) {
@@ -55,8 +59,10 @@ const RoomGallery = () => {
         const res = await axios.get(
           `${process.env.REACT_APP_BACKEND_URL}/api/getRoomDetails/${room_id}`
         );
-        // console.log(res);
+        console.log(res);
         setRoomDetails(res.data.data[0]);
+        setAdmins(res.data.admins);
+        setRoommembers(res.data.members);
       } catch (error) {
         console.log(error);
       }
@@ -88,7 +94,7 @@ const RoomGallery = () => {
   };
 
   return (
-    <>
+    <div className="relative">
       {roomDetails ? (
         <div className="w-[80%] md:w-[90%] mx-auto min-h-[90vh] py-10">
           <div className="flex justify-between md:flex-col md:px-4 md:gap-4">
@@ -200,7 +206,45 @@ const RoomGallery = () => {
           </div>
         </div>
       )}
-    </>
+
+      <div className="absolute top-8 right-8 md:top-4 md:right-4">
+        <button
+          onClick={() => setShowUsers(true)}
+          className="bg-zinc-700 h-16 w-16 md:h-10 md:w-10 hover:bg-zinc-600 duration-200 text-white font-bold rounded-full shadow-lg text-3xl md:text-lg"
+        >
+          <FaUsers className="mx-auto" />
+        </button>
+      </div>
+
+      {showUsers && (
+        <div className="absolute top-0 right-0 w-[20%] md:w-[60%] opacity-[0.98] rounded-bl-xl bg-gray-300 h-auto p-6">
+          <div className="mb-6">
+            <h1 className="text-xl mb-2 font-semibold">Admins</h1>
+            <div className="grid grid-cols-1 text-base">
+              {admins?.map((admin) => (
+                <p key={admin.admin_id}>{admin.admin_name}</p>
+              ))}
+            </div>
+          </div>
+          <div>
+            <h1 className="text-xl mb-2 font-semibold">Room members</h1>
+            <div className="grid grid-cols-1 text-base">
+              {roommembers?.map((members) => (
+                <p key={members.member_id}>{members.member_name}</p>
+              ))}
+            </div>
+          </div>
+          <div className="absolute top-8 right-8 md:top-4 md:right-4">
+            <button
+              onClick={() => setShowUsers(false)}
+              className="text-3xl md:text-xl"
+            >
+              <FaTimes className="mx-auto" />
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
