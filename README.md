@@ -8,4 +8,4 @@ This is online document sharing platform, where user can add documents of any ty
 - Netlify
 - Tailwind CSS
 ## Working Link 🔗
-https://notehub-sahilhedau49.netlify.app/
+https://notehub49.netlify.app
