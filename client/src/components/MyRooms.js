@@ -9,6 +9,7 @@ const MyRooms = () => {
   const [myRooms, setMyRooms] = useState([]);
   const { user } = UserAuth();
   const [leaveRoomMenu, setLeaveRoomMenu] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,7 +19,8 @@ const MyRooms = () => {
           const res = await axios.get(
             `${process.env.REACT_APP_BACKEND_URL}/api/getRoomsForMember/${username}`
           );
-          // console.log(res);
+          console.log(res);
+          setLoading(false);
           setMyRooms(res.data.rooms);
         } catch (error) {
           console.log(error);
@@ -51,7 +53,7 @@ const MyRooms = () => {
         My Rooms
       </div>
 
-      {myRooms?.length > 0 ? (
+      {myRooms?.length > 0 && (
         <div className="grid grid-cols-3 gap-6 md:grid-cols-1">
           {myRooms.map((room) => (
             <div key={room.room_id} className="card bg-zinc-100 shadow-xl">
@@ -95,7 +97,13 @@ const MyRooms = () => {
             </div>
           ))}
         </div>
-      ) : (
+      )}
+      {loading && (
+        <div className="block">
+          <span className="loading-rooms relative left-1/2 -translate-x-1/2 mt-3"></span>
+        </div>
+      )}
+      {loading === false && !myRooms && (
         <h2 className="w-full md:w-[80%] md:mx-auto text-4xl md:text-2xl text-center font-semibold text-zinc-400">
           You have not joined any room yet...
         </h2>

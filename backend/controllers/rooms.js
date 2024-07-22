@@ -57,19 +57,35 @@ const createRoom = (req, res) => {
 const addNewAdminToRoom = (req, res) => {
   const { admin_email, room_id, admin_name } = req.body;
 
-  const q =
-    "INSERT INTO admins (`admin_email`, `room_id`, `admin_name`) VALUES (?, ?, ?)";
-  const values = [admin_email, room_id, admin_name];
+  const findAdmin = "SELECT * FROM admins WHERE admin_name = ? and room_id = ?";
 
-  db.query(q, values, (err, result) => {
+  db.query(findAdmin, [admin_name, room_id], (err, result2) => {
     if (err) {
-      return res.json(err);
+      res.json(err);
+      return;
     }
 
-    console.log("Editor added to room successfully");
-    res.json({
-      message: "Editor added to room successfully",
-      result: result,
+    if (result2.length !== 0) {
+      res.json({
+        message: `You are already an admin of room with id ${room_id}`,
+      });
+      return;
+    }
+
+    const q =
+      "INSERT INTO admins (`admin_email`, `room_id`, `admin_name`) VALUES (?, ?, ?)";
+    const values = [admin_email, room_id, admin_name];
+
+    db.query(q, values, (err, result) => {
+      if (err) {
+        return res.json(err);
+      }
+
+      console.log("Editor added to room successfully");
+      res.json({
+        message: "Editor added to room successfully",
+        result: result,
+      });
     });
   });
 };

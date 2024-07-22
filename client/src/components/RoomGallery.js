@@ -41,7 +41,7 @@ const RoomGallery = () => {
           const res = await axios.get(
             `${process.env.REACT_APP_BACKEND_URL}/api/getDocuments/${room_id}/${username}`
           );
-          console.log(res);
+          // console.log(res);
           setDocuments(res.data.documents);
           setIsAdmin(res.data.isAdmin);
         } catch (error) {
@@ -55,7 +55,7 @@ const RoomGallery = () => {
         const res = await axios.get(
           `${process.env.REACT_APP_BACKEND_URL}/api/getRoomDetails/${room_id}`
         );
-        console.log(res);
+        // console.log(res);
         setRoomDetails(res.data.data[0]);
       } catch (error) {
         console.log(error);

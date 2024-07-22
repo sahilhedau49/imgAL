@@ -64,8 +64,32 @@ const getRoomDetails = (req, res) => {
       return;
     }
 
-    console.log("Room's data retrieved successfully");
-    res.json({ message: "Room's data retrieved successfully", data: results });
+    const ga = "SELECT admin_id, admin_name FROM admins WHERE room_id = ?";
+
+    db.query(ga, [room_id], (err, results2) => {
+      if (err) {
+        res.json(err);
+        return;
+      }
+
+      const gm =
+        "SELECT member_id, member_name FROM roommembers WHERE room_id = ?";
+
+      db.query(gm, [room_id], (err, results3) => {
+        if (err) {
+          res.json(err);
+          return;
+        }
+
+        console.log("Room's data retrieved successfully");
+        res.json({
+          message: "Room's data retrieved successfully",
+          data: results,
+          admins: results2,
+          members: results3,
+        });
+      });
+    });
   });
 };
 
